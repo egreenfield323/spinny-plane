@@ -1,0 +1,161 @@
+[gd_scene load_steps=12 format=3 uid="uid://bgrxrgf3ng54s"]
+
+[ext_resource type="Script" path="res://scripts/flappyController.gd" id="1_nmatd"]
+[ext_resource type="PackedScene" uid="uid://cp56wbavxxndy" path="res://scenes/rock.tscn" id="2_fwkck"]
+[ext_resource type="PackedScene" uid="uid://dwlu1jmgcmxkv" path="res://scenes/plane.tscn" id="3_bun40"]
+[ext_resource type="Texture2D" uid="uid://do6glsjd2tv7t" path="res://assets/background.png" id="4_ac4ej"]
+[ext_resource type="AudioStream" uid="uid://8dwb3yalckxr" path="res://assets/Three Red Hearts - Pixel War 2.ogg" id="4_d6oev"]
+[ext_resource type="AudioStream" uid="uid://dchknkkmsdyea" path="res://assets/impactPunch_heavy_001.ogg" id="5_hl8it"]
+[ext_resource type="FontFile" uid="uid://n45phwphkp7q" path="res://assets/BebasNeue-Regular.ttf" id="7_v5for"]
+[ext_resource type="PackedScene" uid="uid://d0ogcdmno43xb" path="res://scenes/border.tscn" id="8_b6uwy"]
+
+[sub_resource type="Animation" id="Animation_87t01"]
+resource_name = "Game_over appear"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.933333)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-50, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.933333)
+}
+
+[sub_resource type="Animation" id="Animation_jb0a4"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-50, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w34sj"]
+_data = {
+"Game_over appear": SubResource("Animation_87t01"),
+"RESET": SubResource("Animation_jb0a4")
+}
+
+[node name="Main" type="Node"]
+script = ExtResource("1_nmatd")
+rock = ExtResource("2_fwkck")
+plane = ExtResource("3_bun40")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(572, 330)
+scale = Vector2(1.485, 1.485)
+texture = ExtResource("4_ac4ej")
+
+[node name="borders" type="Node" parent="."]
+
+[node name="border" parent="borders" instance=ExtResource("8_b6uwy")]
+position = Vector2(575, 625)
+scale = Vector2(1.48, 1)
+
+[node name="border2" parent="borders" instance=ExtResource("8_b6uwy")]
+position = Vector2(571, 26)
+rotation = 3.14159
+scale = Vector2(1.48, 1)
+
+[node name="rock_timer" type="Timer" parent="."]
+wait_time = 0.8
+autostart = true
+
+[node name="rocks" type="Node" parent="."]
+
+[node name="plane" parent="." instance=ExtResource("3_bun40")]
+position = Vector2(200, 322)
+
+[node name="sfx" type="Node2D" parent="."]
+
+[node name="bgm" type="AudioStreamPlayer2D" parent="sfx"]
+stream = ExtResource("4_d6oev")
+autoplay = true
+parameters/looping = true
+
+[node name="thud" type="AudioStreamPlayer2D" parent="sfx"]
+stream = ExtResource("5_hl8it")
+volume_db = 12.0
+
+[node name="GameOver" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -50.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="GameOver"]
+layout_mode = 0
+offset_left = 438.0
+offset_top = 197.0
+offset_right = 730.0
+offset_bottom = 451.0
+color = Color(0, 0.47451, 0.701961, 0.658824)
+
+[node name="Label" type="Label" parent="GameOver"]
+layout_mode = 0
+offset_left = 476.0
+offset_top = 243.0
+offset_right = 2577.0
+offset_bottom = 789.0
+scale = Vector2(0.1, 0.1)
+theme_override_fonts/font = ExtResource("7_v5for")
+theme_override_font_sizes/font_size = 400
+text = "Game over"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="GameOver"]
+layout_mode = 0
+offset_left = 497.0
+offset_top = 336.0
+offset_right = 2232.0
+offset_bottom = 944.0
+scale = Vector2(0.1, 0.1)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("7_v5for")
+theme_override_font_sizes/font_size = 500
+text = "Play again"
+icon_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GameOver"]
+libraries = {
+"": SubResource("AnimationLibrary_w34sj")
+}
+
+[connection signal="timeout" from="rock_timer" to="." method="_on_rock_timer_timeout"]
+[connection signal="pressed" from="GameOver/Button" to="." method="_on_button_pressed"]

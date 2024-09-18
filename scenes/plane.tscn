@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=3 uid="uid://dwlu1jmgcmxkv"]
+
+[ext_resource type="Script" path="res://scripts/plane.gd" id="1_415un"]
+[ext_resource type="Texture2D" uid="uid://47k78kh46ifd" path="res://assets/planeYellow1.png" id="2_13yeb"]
+[ext_resource type="Texture2D" uid="uid://cgfqgopt5rl7l" path="res://assets/planeYellow2.png" id="3_k6v6c"]
+[ext_resource type="Texture2D" uid="uid://dhdmxdv72c3t1" path="res://assets/planeYellow3.png" id="4_81g0x"]
+[ext_resource type="AudioStream" uid="uid://7p7ujyjwisus" path="res://assets/flap.wav" id="5_kppwr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_losga"]
+radius = 48.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rgwtv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_13yeb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_k6v6c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_81g0x")
+}],
+"loop": true,
+"name": &"flap",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_13yeb")
+}],
+"loop": true,
+"name": &"glide",
+"speed": 5.0
+}]
+
+[node name="plane" type="RigidBody2D"]
+script = ExtResource("1_415un")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_losga")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_rgwtv")
+animation = &"flap"
+autoplay = "glide"
+frame = 1
+frame_progress = 0.892743
+
+[node name="flap" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_kppwr")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
