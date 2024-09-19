@@ -21,15 +21,15 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("4_81g0x")
 }],
-"loop": true,
+"loop": false,
 "name": &"flap",
-"speed": 10.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_13yeb")
 }],
-"loop": true,
+"loop": false,
 "name": &"glide",
 "speed": 5.0
 }]
@@ -44,8 +44,6 @@ shape = SubResource("CircleShape2D_losga")
 sprite_frames = SubResource("SpriteFrames_rgwtv")
 animation = &"flap"
 autoplay = "glide"
-frame = 1
-frame_progress = 0.892743
 
 [node name="flap" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_kppwr")

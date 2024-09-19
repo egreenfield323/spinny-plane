@@ -30,7 +30,7 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(-50, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(-500, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0, 0.933333)
 }
 
@@ -74,37 +74,6 @@ plane = ExtResource("3_bun40")
 position = Vector2(572, 330)
 scale = Vector2(1.485, 1.485)
 texture = ExtResource("4_ac4ej")
-
-[node name="borders" type="Node" parent="."]
-
-[node name="border" parent="borders" instance=ExtResource("8_b6uwy")]
-position = Vector2(575, 625)
-scale = Vector2(1.48, 1)
-
-[node name="border2" parent="borders" instance=ExtResource("8_b6uwy")]
-position = Vector2(571, 26)
-rotation = 3.14159
-scale = Vector2(1.48, 1)
-
-[node name="rock_timer" type="Timer" parent="."]
-wait_time = 0.8
-autostart = true
-
-[node name="rocks" type="Node" parent="."]
-
-[node name="plane" parent="." instance=ExtResource("3_bun40")]
-position = Vector2(200, 322)
-
-[node name="sfx" type="Node2D" parent="."]
-
-[node name="bgm" type="AudioStreamPlayer2D" parent="sfx"]
-stream = ExtResource("4_d6oev")
-autoplay = true
-parameters/looping = true
-
-[node name="thud" type="AudioStreamPlayer2D" parent="sfx"]
-stream = ExtResource("5_hl8it")
-volume_db = 12.0
 
 [node name="GameOver" type="Control" parent="."]
 visible = false
@@ -157,5 +126,36 @@ libraries = {
 "": SubResource("AnimationLibrary_w34sj")
 }
 
-[connection signal="timeout" from="rock_timer" to="." method="_on_rock_timer_timeout"]
+[node name="borders" type="Node" parent="."]
+
+[node name="border" parent="borders" instance=ExtResource("8_b6uwy")]
+position = Vector2(575, 625)
+scale = Vector2(1.48, 1)
+
+[node name="border2" parent="borders" instance=ExtResource("8_b6uwy")]
+position = Vector2(571, 26)
+rotation = 3.14159
+scale = Vector2(1.48, 1)
+
+[node name="rock_timer" type="Timer" parent="."]
+wait_time = 0.8
+autostart = true
+
+[node name="rocks" type="Node" parent="."]
+
+[node name="plane" parent="." instance=ExtResource("3_bun40")]
+position = Vector2(200, 322)
+
+[node name="sfx" type="Node2D" parent="."]
+
+[node name="bgm" type="AudioStreamPlayer2D" parent="sfx"]
+stream = ExtResource("4_d6oev")
+autoplay = true
+parameters/looping = true
+
+[node name="thud" type="AudioStreamPlayer2D" parent="sfx"]
+stream = ExtResource("5_hl8it")
+volume_db = 12.0
+
 [connection signal="pressed" from="GameOver/Button" to="." method="_on_button_pressed"]
+[connection signal="timeout" from="rock_timer" to="." method="_on_rock_timer_timeout"]
